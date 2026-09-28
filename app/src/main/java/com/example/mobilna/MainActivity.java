@@ -3,6 +3,7 @@ package com.example.mobilna;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -14,11 +15,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText number;
-    private EditText name;
-    private EditText surname;
+    private EditText    number;
+    private EditText    name;
+    private EditText   surname;
     private RadioGroup eye_color;
-    private Button submit_button;
+    private Button     submit_button;
+    private ImageView  image_person;
+
+    private ImageView  image_touch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +35,14 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        name = findViewById(R.id.editImie);
-        surname = findViewById(R.id.editNazwisko);
-        eye_color = findViewById(R.id.radioGroupKolorOczu);
+        number        = findViewById(R.id.editNumer);
+        name          = findViewById(R.id.editImie);
+        surname       = findViewById(R.id.editNazwisko);
+        eye_color     = findViewById(R.id.radioGroupKolorOczu);
         submit_button = findViewById(R.id.buttonOk);
+
+        image_person = findViewById(R.id.imageZdjecie);
+        image_touch = findViewById(R.id.imageOdcisk);
 
         submit_button.setOnClickListener(v -> {
             String name = this.name.getText().toString();
@@ -46,10 +54,43 @@ public class MainActivity extends AppCompatActivity {
 
             show_info(name, surname, eyeColorText);
         });
+
+        number.setOnFocusChangeListener((view, hasFocus) -> {
+            String image_number_prefix =  number.getText().toString();
+
+            change_img(image_number_prefix);
+        });
+    }
+
+    void change_img(String img_prefix)
+    {
+        switch(img_prefix)
+        {
+            case "0":
+                image_person.setImageResource(R.drawable.zdjecia0);
+                image_touch.setImageResource(R.drawable.odcisk0);
+                break;
+
+            case "1":
+                image_person.setImageResource(R.drawable.zdjecia1);
+                image_touch.setImageResource(R.drawable.odcisk1);
+                break;
+
+            case "2":
+                image_person.setImageResource(R.drawable.zdjecie2);
+                image_touch.setImageResource(R.drawable.odcisk2);
+                break;
+
+        }
     }
 
     void show_info(String name, String surname, String eye_color)
     {
+        if (name.isEmpty() || surname.isEmpty() || eye_color.isEmpty())
+        {
+            Toast.makeText(this, "Wprowadź dane", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String whole_text = String.format("%s %s kolor oczu %s", name, surname, eye_color);
         Toast.makeText(this, whole_text, Toast.LENGTH_SHORT).show();
     }
