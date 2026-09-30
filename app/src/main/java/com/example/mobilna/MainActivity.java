@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -23,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView  image_person;
 
     private ImageView  image_touch;
+
+    private PassportValidator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         image_person = findViewById(R.id.imageZdjecie);
         image_touch = findViewById(R.id.imageOdcisk);
 
+        validator = new PassportValidator();
+
         submit_button.setOnClickListener(v -> {
             String name = this.name.getText().toString();
             String surname = this.surname.getText().toString();
@@ -56,14 +59,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         number.setOnFocusChangeListener((view, hasFocus) -> {
-            String image_number_prefix =  number.getText().toString();
-
-            change_img(image_number_prefix);
+            if (!number.getText().toString().isEmpty())
+            {
+                String image_number_prefix =  number.getText().toString();
+                change_img(image_number_prefix);
+            }
         });
     }
 
     void change_img(String img_prefix)
     {
+        validator.validate_number(Integer.parseInt(img_prefix));
         switch(img_prefix)
         {
             case "0":
@@ -86,11 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
     void show_info(String name, String surname, String eye_color)
     {
-        if (name.isEmpty() || surname.isEmpty() || eye_color.isEmpty())
-        {
-            Toast.makeText(this, "Wprowadź dane", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        validator.validate_input(name);
+        validator.validate_input(surname);
+
         String whole_text = String.format("%s %s kolor oczu %s", name, surname, eye_color);
         Toast.makeText(this, whole_text, Toast.LENGTH_SHORT).show();
     }
