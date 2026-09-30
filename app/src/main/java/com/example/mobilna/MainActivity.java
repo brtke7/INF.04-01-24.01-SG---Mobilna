@@ -75,7 +75,13 @@ public class MainActivity extends AppCompatActivity {
 //    ***********************************************
     void change_img(String img_prefix)
     {
-        validator.validate_number(Integer.parseInt(img_prefix));
+        String numberValidator = validator.validate_number(Integer.parseInt(img_prefix));
+
+        if (!numberValidator.isEmpty())
+        {
+            Toast.makeText(this, numberValidator, Toast.LENGTH_SHORT).show();
+            return;
+        }
         switch(img_prefix)
         {
             case "0":
@@ -98,8 +104,20 @@ public class MainActivity extends AppCompatActivity {
 
     void show_info(String name, String surname, String eye_color)
     {
-        validator.validate_input(name);
-        validator.validate_input(surname);
+        String nameValidator = validator.validate_input(name);
+        String surnameValidator = validator.validate_input(surname);
+
+        if (!nameValidator.isEmpty())
+        {
+            Toast.makeText(this, nameValidator, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!surnameValidator.isEmpty())
+        {
+            Toast.makeText(this, surnameValidator, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String whole_text = String.format("%s %s kolor oczu %s", name, surname, eye_color);
         Toast.makeText(this, whole_text, Toast.LENGTH_SHORT).show();
