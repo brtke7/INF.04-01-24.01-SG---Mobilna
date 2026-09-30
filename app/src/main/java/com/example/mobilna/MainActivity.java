@@ -1,11 +1,13 @@
 package com.example.mobilna;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView  image_person;
 
     private ImageView  image_touch;
+    private TextView log_result;
 
     private PassportValidator validator;
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         image_person = findViewById(R.id.imageZdjecie);
         image_touch = findViewById(R.id.imageOdcisk);
+        log_result = findViewById(R.id.log_result);
 
         validator = new PassportValidator();
 
@@ -80,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         if (!numberValidator.isEmpty())
         {
             Toast.makeText(this, numberValidator, Toast.LENGTH_SHORT).show();
+            log_result.setText(numberValidator);
+            Log.d("KOMUNIKAT", numberValidator);
             return;
         }
         switch(img_prefix)
@@ -110,12 +116,16 @@ public class MainActivity extends AppCompatActivity {
         if (!nameValidator.isEmpty())
         {
             Toast.makeText(this, nameValidator, Toast.LENGTH_SHORT).show();
+            log_result.setText(nameValidator);
+            Log.d("KOMUNIKAT", nameValidator);
             return;
         }
 
         if (!surnameValidator.isEmpty())
         {
             Toast.makeText(this, surnameValidator, Toast.LENGTH_SHORT).show();
+            log_result.setText(surnameValidator);
+            Log.d("KOMUNIKAT", surnameValidator);
             return;
         }
 
