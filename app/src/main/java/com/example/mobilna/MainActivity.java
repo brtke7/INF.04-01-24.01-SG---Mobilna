@@ -66,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+//    **********************************************
+//        nazwa funkcji: <change_img>
+//        opis funkcji: <funkcja zmienia obraz na podstawie inputa>
+//        parametry: <img_prefix -> prefix do zmiany obrazu>
+//        zwracany typ i opis: <brak>
+//        autor: <777777777777777>
+//    ***********************************************
     void change_img(String img_prefix)
     {
         validator.validate_number(Integer.parseInt(img_prefix));
